@@ -26,7 +26,11 @@
             "type": "git"
         },
         {
-            "url":  "https://github.com/octris/core.git",
+            "url":  "https://github.com/octris/container.git",
+            "type": "git"
+        },
+        {
+            "url":  "https://github.com/octris/validate.git",
             "type": "git"
         }
     ],
@@ -36,6 +40,7 @@
         "aaparser/aaparser-php": "dev-master",
         "octris/cli":            "dev-master",
         "octris/cliconfig":      "dev-master",
-        "octris/core":           "dev-master"
+        "octris/container":      "dev-master",
+        "octris/validate":       "dev-master"
     }
 }
