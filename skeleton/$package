@@ -1,0 +1,53 @@
+#!/usr/bin/env php
+<?php
+
+/*
+ * This file is part of the '{{$vendor}}/{{$package}}' package.
+ *
+ * (c) {{$company}}
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * WARNING!!!
+ *
+ * MODIFICATION OF THIS FILE MAY LEAD TO UNEXPECTED BEHAVIOUR!
+ */
+
+/**
+ * Application launcher.
+ *
+ * @copyright   copyright (c) {{$year}} by {{$company}}
+ * @author      {{$author}} <{{$email}}>
+ */
+/**/
+
+if (version_compare(PHP_VERSION, '7.0.0') < 0) {
+    printf(
+        "%s: PHP-7.0.0 or newer is required, your version is '%s'!\n",
+        basename($argv[0]),
+        PHP_VERSION
+    );
+    exit(1);
+}
+
+@include_once(__DIR__ . '/vendor/autoload.php');
+require_once(__DIR__ . '/libs/Autoloader.php');
+
+define('OCTRIS_APP_VENDOR', '{{$vendor}}');
+define('OCTRIS_APP_NAME', '{{$package}}');
+define('OCTRIS_APP_BASE', realpath(__DIR__));
+
+// run application
+(function() {
+    $container = new \Octris\Container();
+    $container->set('config', function () {
+        return new \Octris\Config([__DIR__ . '/etc/config.yml', '~/.octris/{{$package}}.yml'], new \Octris\Config\Format\Yaml());
+    }, \Octris\Container::ACCESS_SHARED | \Octris\Container::ACCESS_READONLY);
+
+    $app = new \Octris\App($container);
+    $app->run();
+})();
+
